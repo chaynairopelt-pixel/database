@@ -3,50 +3,51 @@
 <html lang="nl">
 
 <head>
-    <title>GameDB / Nieuwe game</title>
+    <title>Car brands / Merk toevoegen</title>
     <?php require_once __DIR__ . '/../components/head.php'; ?>
 </head>
 
 <body>
     <?php require_once __DIR__ . '/../components/header.php'; ?>
 
-    <main class="container">
-        <h1>Nieuwe game</h1>
+    <main class="container page">
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">Catalogus toevoegen</p>
+                <h1>Nieuw merk</h1>
+            </div>
+            <a class="text-link" href="index.php">Terug naar overzicht</a>
+        </div>
 
-        <form action="<?php echo htmlspecialchars($base_url, ENT_QUOTES, 'UTF-8'); ?>/app/Http/Controllers/gamesController.php" method="POST">
-            <div class="form-group">
-                <label for="name">Naam:</label>
-                <input type="text" name="name" id="name" class="form-input" maxlength="150" required>
+        <form class="game-form" action="<?php echo htmlspecialchars($base_url, ENT_QUOTES, 'UTF-8'); ?>/app/Http/Controllers/gamesController.php" method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="Brand">Merk</label>
+                    <input type="text" name="Brand" id="Brand" maxlength="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="Year">Jaar</label>
+                    <input type="date" name="Year" id="Year">
+                </div>
+                <div class="form-group">
+                    <label for="price">Prijs</label>
+                    <input type="number" name="price" id="price" min="0" step="0.01" placeholder="24950.00">
+                </div>
+                <div class="form-group">
+                    <label for="doors">Aantal deuren</label>
+                    <input type="number" name="doors" id="doors" min="1" max="10" required>
+                </div>
+                <div class="form-group form-full">
+                    <label for="drive_type">Aandrijving</label>
+                    <select id="drive_type" name="drive_type" required>
+                        <option value="">Kies een aandrijving</option>
+                        <option value="1">1 - Voorwielaandrijving</option>
+                        <option value="2">2 - Achterwielaandrijving</option>
+                        <option value="3">3 - Vierwielaandrijving</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="genre">Genre:</label>
-                <select id="genre" name="genre" required>
-                    <option value="">-- kies een genre --</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Racen">Racen</option>
-                    <option value="Actie">Actie</option>
-                    <option value="Avontuur">Avontuur</option>
-                    <option value="Strategie">Strategie</option>
-                    <option value="Overig">Overig</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="platforms">Platformen:</label>
-                <input type="text" name="platforms" id="platforms" class="form-input" maxlength="255" placeholder="Bijv. PC, PlayStation, Xbox" required>
-            </div>
-            <div class="form-group">
-                <label for="release_year">Releasejaar:</label>
-                <input type="number" name="release_year" id="release_year" class="form-input" min="1950" max="<?php echo (int) date('Y') + 5; ?>">
-            </div>
-            <div class="form-group">
-                <label for="developer">Ontwikkelaar:</label>
-                <input type="text" name="developer" id="developer" class="form-input" maxlength="150" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Beschrijving:</label>
-                <textarea name="description" id="description" class="form-input" rows="4"></textarea>
-            </div>
-            <input type="submit" value="Game opslaan">
+            <button class="button" type="submit">Merk opslaan</button>
         </form>
     </main>
 </body>

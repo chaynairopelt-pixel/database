@@ -7,9 +7,9 @@
 //Deze config wordt hierna _niet_ meegestuurd naar je groepsgenoten. Zo kan iedereen zijn eigen wachtwoord, etc. invullen.
 
 $dbHost = 'localhost';
-$dbName = 'gamesdb';
+$dbName = 'carsdb';
 $dbUser = 'root';
 $dbPass = '';
 
 //De url waarop jouw project staat. Géén slash aan het einde.
-$base_url = 'http://storingapp.test';
+$base_url = 'http://database.test';

@@ -8,46 +8,48 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit('Alleen POST-verzoeken zijn toegestaan.');
 }
 
-$name = trim($_POST['name'] ?? '');
-$genre = $_POST['genre'] ?? '';
-$platforms = trim($_POST['platforms'] ?? '');
-$releaseYearInput = $_POST['release_year'] ?? '';
-$developer = trim($_POST['developer'] ?? '');
-$description = trim($_POST['description'] ?? '');
-$allowedGenres = ['Sport', 'Racen', 'Actie', 'Avontuur', 'Strategie', 'Overig'];
+$brand = trim($_POST['Brand'] ?? '');
+$year = trim($_POST['Year'] ?? '');
+$priceInput = $_POST['price'] ?? '';
+$doorsInput = $_POST['doors'] ?? '';
+$driveTypeInput = $_POST['drive_type'] ?? '';
 
 if (
-    $name === '' || strlen($name) > 150 ||
-    !in_array($genre, $allowedGenres, true) ||
-    $platforms === '' || strlen($platforms) > 255 ||
-    $developer === '' || strlen($developer) > 150
+    $brand === '' || strlen($brand) > 100 ||
+    $doorsInput === '' ||
+    $driveTypeInput === ''
 ) {
     http_response_code(400);
     exit('Vul alle verplichte velden correct in.');
 }
 
-$releaseYear = null;
-if ($releaseYearInput !== '') {
-    $releaseYear = filter_var($releaseYearInput, FILTER_VALIDATE_INT);
-    if ($releaseYear === false || $releaseYear < 1950 || $releaseYear > (int) date('Y') + 5) {
-        http_response_code(400);
-        exit('Vul een geldig releasejaar in.');
-    }
+$price = filter_var($priceInput, FILTER_VALIDATE_FLOAT);
+$doors = filter_var($doorsInput, FILTER_VALIDATE_INT);
+$driveType = filter_var($driveTypeInput, FILTER_VALIDATE_INT);
+
+if (
+    ($priceInput !== '' && $price === false) ||
+    $doors === false || $doors < 1 ||
+    $driveType === false
+) {
+    http_response_code(400);
+    exit('Vul geldige autogegevens in.');
 }
 
+$year = $year !== '' ? $year : null;
+
 $query = '
-    INSERT INTO games (name, genre, platforms, release_year, developer, description)
-    VALUES (:name, :genre, :platforms, :release_year, :developer, :description)
+    INSERT INTO car_brands (Brand, Year, price, doors, drive_type)
+    VALUES (:brand, :year, :price, :doors, :drive_type)
 ';
 $statement = $conn->prepare($query);
 $statement->execute([
-    ':name' => $name,
-    ':genre' => $genre,
-    ':platforms' => $platforms,
-    ':release_year' => $releaseYear,
-    ':developer' => $developer,
-    ':description' => $description !== '' ? $description : null,
+    ':brand' => $brand,
+    ':year' => $year,
+    ':price' => $priceInput !== '' ? $price : null,
+    ':doors' => $doors,
+    ':drive_type' => $driveType,
 ]);
 
-header('Location: ' . $base_url . '/resources/views/games/index.php?msg=' . rawurlencode('De game is opgeslagen.'));
+header('Location: ' . $base_url . '/resources/views/games/index.php?msg=' . rawurlencode('Het merk is opgeslagen.'));
 exit;

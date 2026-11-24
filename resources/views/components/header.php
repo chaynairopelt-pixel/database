@@ -3,11 +3,9 @@
 <header>
     <div class="container">
         <nav>
-            <img src="<?php echo $base_url; ?>/public_html/img/logo-big-v4.png" alt="GameDB" class="logo">
-            <a href="<?php echo $base_url; ?>/resources/views/games/index.php">Games</a>
+            <span class="site-name">Car brands</span>
+            <a href="<?php echo $base_url; ?>/resources/views/games/index.php">Merken</a>
         </nav>
-        <div>
-            <a href="#" style="color: lightgrey;">Inloggen</a>
-        </div>
+        <a class="header-link" href="<?php echo $base_url; ?>/resources/views/games/create.php">Toevoegen</a>
     </div>
 </header>
